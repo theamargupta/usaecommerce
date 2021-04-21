@@ -1,29 +1,21 @@
-import React from 'react';
+import Tag from './heroComponents/Tag'
+import Center from './heroComponents/Center'
+import Footer from './heroComponents/Footer'
+import Showcase from './heroComponents/Showcase'
+import DisplaySmall from './heroComponents/DisplaySmall'
+import DisplayMedium from './heroComponents/DisplayMedium'
+import Spacer from './heroComponents/Spacer'
+import Button from './Button'
+import Image from './Image'
 
-export function Pokemon({ pokemon }) {
-  return (
-    <div className="pokemon">
-      <div className="pokemon__name">
-        <p>{pokemon.name}</p>
-      </div>
-      <div className="pokemon__meta">
-        <span>{pokemon.maxHP}</span>
-        <span>{pokemon.maxCP}</span>
-      </div>
-      <div className="pokemon__image">
-        <img src={pokemon.image} alt={pokemon.name} />
-      </div>
-      <div className="pokemon__attacks">
-        {pokemon &&
-          pokemon.attacks &&
-          pokemon.attacks.special
-            .slice(0, 3)
-            .map(attack => (
-              <span key={`${attack.name}-${attack.damage}`}>
-                {attack.name}
-              </span>
-            ))}
-      </div>
-    </div>
-  )
+export {
+  Tag,
+  Center,
+  Footer,
+  Button,
+  Image,
+  Showcase,
+  DisplaySmall,
+  DisplayMedium,
+  Spacer
 }
