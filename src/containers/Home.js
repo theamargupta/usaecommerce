@@ -11,14 +11,14 @@ import { titleIfy, slugify } from '../utils/helpers';
 import { useQuery } from '@apollo/react-hooks';
 import { HOME_DATA } from '../graphql';
 import CartLink from '../components/CartLink';
+import HomeScreenLoader from '../components/Loaders/HomeScreenLoader';
 
 const Home = () => {
   const { loading, error, data } = useQuery(HOME_DATA);
-
-  data && console.log('data', data);
+  // data && console.log('data', data);
   error && console.error('error', error);
   return loading ? (
-    <p>Loading ...</p>
+    <HomeScreenLoader />
   ) : (
     <>
       <CartLink />

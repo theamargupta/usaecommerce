@@ -1,15 +1,18 @@
-import { titleIfy, slugify } from '../utils/helpers';
+import { titleIfy } from '../utils/helpers';
 import { DisplayMedium } from '../components';
 import CartLink from '../components/CartLink';
 import { useQuery } from '@apollo/react-hooks';
 import { ALL_CATEGORIES, GET_ONE_CATEGORY } from '../graphql';
+import CardLoader from '../components/Loaders/CardLoader';
+import AllCategorieLoader from '../components/Loaders/AllCategorieLoader';
+
 const Category = ({ categoryData }) => {
-  const { loading, error, data } = useQuery(GET_ONE_CATEGORY, {
+  const { loading, data } = useQuery(GET_ONE_CATEGORY, {
     variables: { value: categoryData.value },
   });
   data && console.log(data);
   return loading ? (
-    <p>Loading ...</p>
+    <CardLoader />
   ) : (
     <DisplayMedium
       imageSrc={data.allSofas[0].image}
@@ -20,9 +23,9 @@ const Category = ({ categoryData }) => {
   );
 };
 const AllCategories = () => {
-  const { loading, error, data } = useQuery(ALL_CATEGORIES);
+  const { loading, data } = useQuery(ALL_CATEGORIES);
   return loading ? (
-    <p>Loading ...</p>
+    <AllCategorieLoader />
   ) : (
     <>
       <div className='w-full'>

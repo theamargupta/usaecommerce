@@ -4,17 +4,11 @@ import Home from '../containers/Home';
 import Category from '../containers/Category';
 import AllCategories from '../containers/AllCategories';
 import Layout from '../layouts/layout';
-import { useQuery } from '@apollo/react-hooks';
-import { ALL_CATEGORIES } from '../graphql';
 
 const AppRouter = () => {
-  const { loading, error, data } = useQuery(ALL_CATEGORIES);
-  error && console.error('error', error);
-  return loading ? (
-    <p>Loading ...</p>
-  ) : (
+  return (
     <div>
-      <Layout categories={data.allCategories}>
+      <Layout>
         <Switch>
           <Route exact path='/' component={Home} />
           <Route exact path='/category/:name' component={Category} />

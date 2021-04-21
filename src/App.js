@@ -7,8 +7,8 @@ import './App.css';
 
 const App = () => {
   const client = new ApolloClient({
-    // uri: 'https://amarsblog.herokuapp.com/admin/api',
-    uri: 'http://localhost:5000/admin/api',
+    uri: 'https://amarsblog.herokuapp.com/admin/api',
+    // uri: 'http://localhost:5000/admin/api',
     cache: new InMemoryCache(),
     credentials: 'include',
   });

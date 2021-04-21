@@ -4,6 +4,7 @@ import { GET_CATEGORIES } from '../graphql';
 import { titleIfy } from '../utils/helpers';
 import { useQuery } from '@apollo/react-hooks';
 import ListItem from '../components/ListItem';
+import AllCategorieLoader from '../components/Loaders/AllCategorieLoader';
 
 const Category = (props) => {
   let { name } = useParams();
@@ -12,9 +13,7 @@ const Category = (props) => {
   });
   data && console.log(data.allSofas);
   error && console.error(error);
-  return loading ? (
-    <p>Loading ...</p>
-  ) : (
+  return (
     <>
       <CartLink />
       <div className='flex flex-col items-center'>
@@ -25,17 +24,21 @@ const Category = (props) => {
 
           <div>
             <div className='flex flex-1 flex-wrap flex-row'>
-              {data.allSofas.map((item, index) => {
-                return (
-                  <ListItem
-                    key={index}
-                    link={`/product/${item.name}`}
-                    title={item.name}
-                    price={item.price}
-                    imageSrc={item.image}
-                  />
-                );
-              })}
+              {loading ? (
+                <AllCategorieLoader />
+              ) : (
+                data.allSofas.map((item, index) => {
+                  return (
+                    <ListItem
+                      key={index}
+                      link={`/product/${item.name}`}
+                      title={item.name}
+                      price={item.price}
+                      imageSrc={item.image}
+                    />
+                  );
+                })
+              )}
             </div>
           </div>
         </div>

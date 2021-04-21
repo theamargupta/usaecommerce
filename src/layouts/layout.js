@@ -2,9 +2,14 @@ import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { navItemLength } from '../ecommerce.config';
+import { ALL_CATEGORIES } from '../graphql';
+import HeaderLoader from '../components/Loaders/HeaderLoader';
+import { useQuery } from '@apollo/react-hooks';
 
 export default function Layout({ children, categories }) {
-  if (categories.length > navItemLength) {
+  const { loading, error, data } = useQuery(ALL_CATEGORIES);
+  error && console.error('error', error);
+  if (data && data.allCategories.length > navItemLength) {
     categories = categories.slice(0, navItemLength);
   }
   return (
@@ -24,47 +29,51 @@ export default function Layout({ children, categories }) {
                 {/* </a> */}
               </Link>
             </div>
-            <div className='flex flex-wrap mt-1'>
-              <Link to='/'>
-                {/* <a aria-label='Home'> */}
-                <p
-                  className='
+            {loading ? (
+              <HeaderLoader />
+            ) : (
+              <div className='flex flex-wrap mt-1'>
+                <Link to='/'>
+                  {/* <a aria-label='Home'> */}
+                  <p
+                    className='
                     sm:mr-8 sm:mb-0
                     mb-4 text-left text-smaller mr-4
                   '
-                >
-                  Home
-                </p>
-                {/* </a> */}
-              </Link>
-              {categories.map((category, index) => (
-                <Link to={`/category/${category.value}`} key={index}>
-                  {/* <a aria-label={category}> */}
-                  <p
-                    className='
-                          sm:mr-8 sm:mb-0
-                          mb-4 text-left text-smaller mr-4
-                        '
                   >
-                    {category.name.charAt(0).toUpperCase() +
-                      category.name.slice(1)}
+                    Home
                   </p>
                   {/* </a> */}
                 </Link>
-              ))}
-              <Link to='/categories'>
-                {/* <a aria-label='All categories'> */}
-                <p
-                  className='
+                {data.allCategories.map((category, index) => (
+                  <Link to={`/category/${category.value}`} key={index}>
+                    {/* <a aria-label={category}> */}
+                    <p
+                      className='
+                          sm:mr-8 sm:mb-0
+                          mb-4 text-left text-smaller mr-4
+                        '
+                    >
+                      {category.name.charAt(0).toUpperCase() +
+                        category.name.slice(1)}
+                    </p>
+                    {/* </a> */}
+                  </Link>
+                ))}
+                <Link to='/categories'>
+                  {/* <a aria-label='All categories'> */}
+                  <p
+                    className='
                     sm:mr-8 sm:mb-0
                     mb-4 text-left text-smaller mr-4 
                   '
-                >
-                  All
-                </p>
-                {/* </a> */}
-              </Link>
-            </div>
+                  >
+                    All
+                  </p>
+                  {/* </a> */}
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </nav>
