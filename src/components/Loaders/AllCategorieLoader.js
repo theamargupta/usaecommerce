@@ -11,12 +11,11 @@ const MyLoader = (props) => (
     foregroundColor='#ffffff'
     {...props}
   >
-    <rect x='241' y='105' rx='0' ry='0' width='242' height='297' />
-    <rect x='517' y='103' rx='0' ry='0' width='241' height='294' />
-    <rect x='791' y='103' rx='0' ry='0' width='263' height='295' />
-    <rect x='247' y='471' rx='0' ry='0' width='234' height='349' />
-    <rect x='313' y='610' rx='0' ry='0' width='19' height='52' />
-    <rect x='521' y='471' rx='0' ry='0' width='246' height='341' />
+    <rect x='256' y='1050' rx='3' ry='3' width='633' height='6' />
+    <rect x='7' y='25' rx='0' ry='0' width='251' height='340' />
+    <rect x='311' y='27' rx='0' ry='0' width='284' height='335' />
+    <rect x='641' y='31' rx='0' ry='0' width='270' height='337' />
+    <rect x='942' y='32' rx='0' ry='0' width='242' height='338' />
   </ContentLoader>
 );
 
