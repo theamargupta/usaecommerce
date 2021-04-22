@@ -7,7 +7,7 @@ import {
   DisplaySmall,
   DisplayMedium,
 } from '../components';
-import { titleIfy, slugify } from '../utils/helpers';
+import { titleIfy } from '../utils/helpers';
 import { useQuery } from '@apollo/react-hooks';
 import { HOME_DATA } from '../graphql';
 import CartLink from '../components/CartLink';

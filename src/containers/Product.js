@@ -10,12 +10,10 @@ import { useQuery } from '@apollo/react-hooks';
 
 const ItemView = (props) => {
   const { productId } = useParams();
-  const { loading, error, data } = useQuery(GET_ONE_SOFA, {
+  const { loading, data } = useQuery(GET_ONE_SOFA, {
     variables: { productId: productId },
   });
   const [numberOfitems, updateNumberOfItems] = useState(1);
-  data && console.log(data.Sofa);
-  // const { price, image, name, description } = data.Sofa;
   const {
     context: { addToCart },
   } = props;
