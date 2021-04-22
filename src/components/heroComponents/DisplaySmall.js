@@ -8,8 +8,7 @@ const DisplaySmall = ({ link, title, subtitle, imageSrc }) => (
   px-6 pt-10 pb-2 lg:p-6 lg:pb-0
   hover:bg-light-200 lg:mb-0 mb-4'
   >
-    <Link to={link}>
-      {/* <a aria-label={title}> */}
+    <Link to={link} aria-label={title}>
       <div className='flex flex-column justify-center items-center h-32'>
         <Image alt={title} src={imageSrc} className='w-3/5' />
       </div>
@@ -19,7 +18,6 @@ const DisplaySmall = ({ link, title, subtitle, imageSrc }) => (
           {getTrimmedString(subtitle, 150)}
         </p>
       </div>
-      {/* </a> */}
     </Link>
   </div>
 );

@@ -33,7 +33,7 @@ const Home = () => {
             <Center
               price={data.Sofa.price}
               title={data.Sofa.name}
-              link={`/product/${slugify(data.Sofa.name)}`}
+              link={`/product/${data.Sofa.id}`}
             />
             <Footer designer='Jason Bourne' />
           </div>
@@ -82,7 +82,7 @@ const Home = () => {
               imageSrc={data.image}
               title={data.name}
               subtitle={data.categories[0].name}
-              link={`/product/${slugify(data.name)}`}
+              link={`/product/${data.id}`}
             />
           ))}
       </div>

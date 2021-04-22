@@ -23,10 +23,8 @@ function CartLink(props) {
       top-40 z-10'
       >
         <div className='flex flex-1 justify-end pr-4 relative'>
-          <Link to='/cart'>
-            {/* <a aria-label='Cart'> */}
+          <Link to='/cart' aria-label='Cart'>
             <FaShoppingCart />
-            {/* </a> */}
           </Link>
           {renderClientSideComponent && numberOfItemsInCart > Number(0) && (
             <FaCircle color={primary} size={12} suppressHydrationWarning />

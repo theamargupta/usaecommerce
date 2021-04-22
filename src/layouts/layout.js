@@ -23,18 +23,15 @@ export default function Layout({ children, categories }) {
           '
           >
             <div className='mb-4 sm:mr-16 max-w-48 sm:max-w-none'>
-              <Link to='/'>
-                {/* <a aria-label='Home'> */}
-                <img src='/logo.png' alt='logo' width='90' height='28' />
-                {/* </a> */}
+              <Link to='/' aria-label='Home'>
+                <img src='/logo3.png' alt='logo' width='130' height='28' />
               </Link>
             </div>
             {loading ? (
               <HeaderLoader />
             ) : (
               <div className='flex flex-wrap mt-1'>
-                <Link to='/'>
-                  {/* <a aria-label='Home'> */}
+                <Link to='/' aria-label='Home'>
                   <p
                     className='
                     sm:mr-8 sm:mb-0
@@ -43,11 +40,13 @@ export default function Layout({ children, categories }) {
                   >
                     Home
                   </p>
-                  {/* </a> */}
                 </Link>
                 {data.allCategories.map((category, index) => (
-                  <Link to={`/category/${category.value}`} key={index}>
-                    {/* <a aria-label={category}> */}
+                  <Link
+                    to={`/category/${category.value}`}
+                    aria-label={category.name}
+                    key={index}
+                  >
                     <p
                       className='
                           sm:mr-8 sm:mb-0
@@ -57,11 +56,9 @@ export default function Layout({ children, categories }) {
                       {category.name.charAt(0).toUpperCase() +
                         category.name.slice(1)}
                     </p>
-                    {/* </a> */}
                   </Link>
                 ))}
-                <Link to='/categories'>
-                  {/* <a aria-label='All categories'> */}
+                <Link to='/categories' aria-label='All categories'>
                   <p
                     className='
                     sm:mr-8 sm:mb-0
@@ -70,7 +67,6 @@ export default function Layout({ children, categories }) {
                   >
                     All
                   </p>
-                  {/* </a> */}
                 </Link>
               </div>
             )}
@@ -91,7 +87,7 @@ export default function Layout({ children, categories }) {
         border-t border-gray-300'
         >
           <span className='block text-gray-700 text-xs'>
-            Copyright © 2021 JAMstack Ecommerce. All rights reserved.
+            Copyright © 2021 Amar's Ecommerce. All rights reserved.
           </span>
           <div
             className='
@@ -99,10 +95,8 @@ export default function Layout({ children, categories }) {
             flex flex-1 mt-4
           '
           >
-            <Link to='/admin'>
-              {/* <a aria-label='Admin panel'> */}
+            <Link to='/admin' aria-label='Admin panel'>
               <p className='text-sm font-semibold'>Admins</p>
-              {/* </a> */}
             </Link>
           </div>
         </div>

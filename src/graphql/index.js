@@ -110,6 +110,21 @@ export const GET_ONE_CATEGORY = gql`
     }
   }
 `;
+export const GET_ONE_SOFA = gql`
+  query getOneSofa($productId: ID!) {
+    Sofa(where: { id: $productId }) {
+      categories {
+        name
+      }
+      name
+      price
+      currentInventory
+      image
+      description
+      brand
+    }
+  }
+`;
 export const USER_AUTHENTICATE = gql`
   mutation userAuth($email: String!, $password: String!) {
     authenticateUserWithPassword(email: $email, password: $password) {

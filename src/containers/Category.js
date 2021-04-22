@@ -31,7 +31,7 @@ const Category = (props) => {
                   return (
                     <ListItem
                       key={index}
-                      link={`/product/${item.name}`}
+                      link={`/product/${item.id}`}
                       title={item.name}
                       price={item.price}
                       imageSrc={item.image}

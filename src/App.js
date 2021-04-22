@@ -3,7 +3,7 @@ import { InMemoryCache, ApolloClient } from '@apollo/client';
 import AppRoute from './Router';
 import Loader from './components/Loader';
 import { ApolloProvider } from '@apollo/react-hooks';
-import './App.css';
+
 
 const App = () => {
   const client = new ApolloClient({
