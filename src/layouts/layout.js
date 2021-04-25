@@ -24,7 +24,12 @@ export default function Layout({ children, categories }) {
           >
             <div className='mb-4 sm:mr-16 max-w-48 sm:max-w-none'>
               <Link to='/' aria-label='Home'>
-                <img src='/logo3.png' alt='logo' width='130' height='28' />
+                <img
+                  src='https://i.ibb.co/3BRNQ0y/logo3.png'
+                  alt='logo'
+                  width='130'
+                  height='28'
+                />
               </Link>
             </div>
             {loading ? (

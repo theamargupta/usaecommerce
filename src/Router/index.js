@@ -12,9 +12,9 @@ const AppRouter = () => {
       <Layout>
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route exact path='/category/:name' component={Category} />
-          <Route exact path='/product/:productId' component={Product} />
-          <Route exact path='/categories' component={AllCategories} />
+          <Route path='/category/:name' component={Category} />
+          <Route path='/product/:productId' component={Product} />
+          <Route path='/categories' component={AllCategories} />
         </Switch>
       </Layout>
     </div>

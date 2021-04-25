@@ -2,8 +2,8 @@ import React, { Suspense } from 'react';
 import { InMemoryCache, ApolloClient } from '@apollo/client';
 import AppRoute from './Router';
 import Loader from './components/Loader';
+import { Route, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
-
 
 const App = () => {
   const client = new ApolloClient({
@@ -15,7 +15,10 @@ const App = () => {
   return (
     <ApolloProvider client={client}>
       <Suspense fallback={<Loader />}>
-        <AppRoute />
+        <Switch>
+          <Route path='/' component={AppRoute} />
+        </Switch>
+        {/* <AppRoute /> */}
       </Suspense>
     </ApolloProvider>
   );

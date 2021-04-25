@@ -5,12 +5,15 @@ import { useQuery } from '@apollo/react-hooks';
 import { ALL_CATEGORIES, GET_ONE_CATEGORY } from '../graphql';
 import CardLoader from '../components/Loaders/CardLoader';
 import AllCategorieLoader from '../components/Loaders/AllCategorieLoader';
+// import { toast } from 'react-toastify';
 
 const Category = ({ categoryData }) => {
-  const { loading, data } = useQuery(GET_ONE_CATEGORY, {
+  const { loading, error, data } = useQuery(GET_ONE_CATEGORY, {
     variables: { value: categoryData.value },
   });
   data && console.log(data);
+  error && console.log(error);
+
   return loading ? (
     <CardLoader />
   ) : (

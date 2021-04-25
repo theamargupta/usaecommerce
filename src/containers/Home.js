@@ -12,41 +12,54 @@ import { useQuery } from '@apollo/react-hooks';
 import { HOME_DATA } from '../graphql';
 import CartLink from '../components/CartLink';
 import HomeScreenLoader from '../components/Loaders/HomeScreenLoader';
+import { toast } from 'react-toastify';
 
 const Home = () => {
   const { loading, error, data } = useQuery(HOME_DATA);
-  // data && console.log('data', data);
-  error && console.error('error', error);
+  error &&
+    error?.errors?.map((data) =>
+      toast.error(data.message, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
+    );
   return loading ? (
     <HomeScreenLoader />
-  ) : (
+  ) : data ? (
     <>
       <CartLink />
-      <div className='w-full'>
-        <div
-          className='bg-blue-300
+      {data?.Sofa ? (
+        <div className='w-full'>
+          <div
+            className='bg-blue-300
         p-6 pb-10 smpb-6
         flex lg:flex-row flex-col'
-        >
-          <div className='pt-4 pl-2 sm:pt-12 sm:pl-12 flex flex-col'>
-            <Tag year='2021' category='SOFAS' />
-            <Center
-              price={data.Sofa.price}
-              title={data.Sofa.name}
-              link={`/product/${data.Sofa.id}`}
-            />
-            <Footer designer='Jason Bourne' />
-          </div>
-          <div className='flex flex-1 justify-center items-center relative'>
-            <Showcase imageSrc={data.Sofa.image} />
-            <div
-              className='absolute
+          >
+            <div className='pt-4 pl-2 sm:pt-12 sm:pl-12 flex flex-col'>
+              <Tag year='2021' category='SOFAS' />
+              <Center
+                price={data.Sofa.price}
+                title={data.Sofa.name}
+                link={`/product/${data.Sofa.id}`}
+              />
+              <Footer designer='Jason Bourne' />
+            </div>
+            <div className='flex flex-1 justify-center items-center relative'>
+              <Showcase imageSrc={data.Sofa.image} />
+              <div
+                className='absolute
               w-48 h-48 sm:w-72 sm:h-72 xl:w-88 xl:h-88
               bg-white z-0 rounded-full'
-            />
+              />
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
       <div
         className='
         lg:my-8 lg:grid-cols-2
@@ -87,6 +100,8 @@ const Home = () => {
           ))}
       </div>
     </>
+  ) : (
+    <p>Nothing</p>
   );
 };
 
