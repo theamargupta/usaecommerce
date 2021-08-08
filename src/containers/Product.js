@@ -6,7 +6,6 @@ import CartLink from "../components/CartLink";
 import { ContextProviderComponent, SiteContext } from "../context/mainContext";
 import { useParams } from "react-router-dom";
 import { fetchOneProduct } from "../graphql";
-import { useQuery } from "@apollo/react-hooks";
 
 const ItemView = (props) => {
   const { productId } = useParams();
