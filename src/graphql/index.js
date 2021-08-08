@@ -1,141 +1,233 @@
-import gql from 'graphql-tag';
+import { request } from "graphql-request";
+const url =
+  "https://api-ap-northeast-1.graphcms.com/v2/cks2xui855rhq01z8f0ko4g6x/master";
+export const fetchHomeData = async (setLoading) => {
+  setLoading(true);
+  try {
+    const data = await request(
+      url,
+      `
+    query {
+      Sofa:sofa(where: { id: "cks2zbag8nwg60b292j7rzmk9" }) {
+        categories {
+          name
+        }
+        id
+        name
+        price
+        currentInventory
+        image
+        description
+        brand
+      }
+      newArrivals: categorie (where:{value:"new-arrivals"}){
+        sofa(first:1) {
+         categories: categories {
+            name
+          }
+          id
+          name
+          price
+          currentInventory
+          image
+          description
+          brand
+        }
+      }
+      newArrivalsCount: categorie (where:{value:"new-arrivals"}){
+        sofa{
+          id
+        }
+      }
+      sofas: categorie (where:{value:"sofas"}){
+        sofa(first:1) {
+         categories: categories {
+            name
+          }
+          id
+          name
+          price
+          currentInventory
+          image
+          description
+          brand
+        }
+      }
+      sofasCount: categorie (where:{value:"sofas"}){
+        sofa{
+          id
+        }
+      }
+      trending: sofas(first: 4) {
+        categories {
+          name
+        }
+        id
+        name
+        price
+        currentInventory
+        image
+        description
+        brand
+      }
+    }
+  `
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
+export const fetchCategory = async (value, setLoading) => {
+  setLoading(true);
+  try {
+    const variables = {
+      value: value,
+    };
+    const data = await request(
+      url,
+      `
+    query ($value:String!){
+      categorie (where:{value: $value}){
+        sofa{categories {
+          name
+        }
+        id
+        name
+        price
+        currentInventory
+        image
+        description
+        brand}
+      }
+    }
+  `,
+      variables
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
+export const fetchAllCategory = async (setLoading) => {
+  setLoading(true);
+  try {
+    const data = await request(
+      url,
+      `
+    {
+      allCategories:categories{
+        name
+        value
+      }
+    }
+  `
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
+export const fetchOneCategory = async (value, setLoading) => {
+  setLoading(true);
+  try {
+    const variables = {
+      value: value,
+    };
+    const data = await request(
+      url,
+      `
+  query ($value:String!){
+    allSofas: categorie(where: {value: $value}) {
+      sofa(first:1) {
+        categories {
+          name
+        }
+        id
+        name
+        price
+        currentInventory
+        image
+        description
+        brand
+      }
+    }
+    countData: categorie(where: {value: $value}) {
+      sofa {
+        id
+      }
+    }
+  }
+  `,
+      variables
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
+export const fetchOneProduct= async (value, setLoading) => {
+  setLoading(true);
+  try {
+    const variables = {
+      productId: value,
+    };
+    const data = await request(
+      url,
+      `
+  query ($productId:ID){
+    Sofa: sofa(where: {id: $productId}) {
+        categories {
+          name
+        }
+        id
+        name
+        price
+        currentInventory
+        image
+        description
+        brand
+      }
+  }
+  `,
+      variables
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
 
-export const HOME_DATA = gql`
-  query {
-    Sofa(where: { id: "607f2f1efa60a7707693ca11" }) {
-      categories {
-        name
-      }
-      id
-      name
-      price
-      currentInventory
-      image
-      description
-      brand
-    }
-    newArrivals: allSofas(
-      where: { categories_some: { value: "newArrivals" } }
-      first: 1
-    ) {
-      categories: categories {
-        name
-      }
-      id
-      name
-      price
-      currentInventory
-      image
-      description
-      brand
-    }
-    newArrivalsCount: _allSofasMeta(
-      where: { categories_some: { value: "newArrivals" } }
-    ) {
-      count
-    }
-    sofas: allSofas(where: { categories_some: { value: "sofas" } }, first: 1) {
-      categories {
-        name
-      }
-      id
-      name
-      price
-      currentInventory
-      image
-      description
-      brand
-    }
-    sofasCount: _allSofasMeta(where: { categories_some: { value: "sofas" } }) {
-      count
-    }
-    trending: allSofas(first: 4) {
-      categories {
-        name
-      }
-      id
-      name
-      price
-      currentInventory
-      image
-      description
-      brand
-    }
-    allCategories {
-      value
-      name
-    }
-  }
-`;
-export const GET_CATEGORIES = gql`
-  query getCategory($value: String!) {
-    allSofas(where: { categories_some: { value: $value } }) {
-      categories {
-        name
-      }
-      id
-      name
-      price
-      currentInventory
-      image
-      description
-      brand
-    }
-  }
-`;
-export const ALL_CATEGORIES = gql`
-  {
-    allCategories {
-      value
-      name
-    }
-  }
-`;
-export const GET_ONE_CATEGORY = gql`
-  query getCategories($value: String!) {
-    allSofas(where: { categories_some: { value: $value } }, first: 1) {
-      categories {
-        name
-      }
-      id
-      name
-      price
-      currentInventory
-      image
-      description
-      brand
-    }
-    countData: _allSofasMeta(where: { categories_some: { value: $value } }) {
-      count
-    }
-  }
-`;
-export const GET_ONE_SOFA = gql`
-  query getOneSofa($productId: ID!) {
-    Sofa(where: { id: $productId }) {
-      categories {
-        name
-      }
-      name
-      price
-      currentInventory
-      image
-      description
-      brand
-    }
-  }
-`;
-export const USER_AUTHENTICATE = gql`
-  mutation userAuth($email: String!, $password: String!) {
-    authenticateUserWithPassword(email: $email, password: $password) {
-      token
-    }
-  }
-`;
-export const POST_MUTATION = gql`
-  mutation PostMutation($id: ID!, $data: PostUpdateInput!) {
-    updatePost(id: $id, data: $data) {
-      id
-    }
-  }
-`;
+
+// export const USER_AUTHENTICATE = request(url,`
+//   mutation userAuth($email: String!, $password: String!) {
+//     authenticateUserWithPassword(email: $email, password: $password) {
+//       token
+//     }
+//   }
+// `);
+// export const POST_MUTATION = request(url,`
+//   mutation PostMutation($id: ID!, $data: PostUpdateInput!) {
+//     updatePost(id: $id, data: $data) {
+//       id
+//     }
+//   }
+// `);
+// query{
+//   categorie (where:{value:"new-arrivals"}){
+//     sofa {
+//       id
+//       name
+//     }
+//   }
+// }

@@ -1,18 +1,19 @@
 import CartLink from '../components/CartLink';
+import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
-import { GET_CATEGORIES } from '../graphql';
+import { fetchCategory } from '../graphql';
 import { titleIfy } from '../utils/helpers';
-import { useQuery } from '@apollo/react-hooks';
 import ListItem from '../components/ListItem';
 import AllCategorieLoader from '../components/Loaders/AllCategorieLoader';
 
 const Category = (props) => {
   let { name } = useParams();
-  const { loading, error, data } = useQuery(GET_CATEGORIES, {
-    variables: { value: name },
-  });
-  data && console.log(data.allSofas);
-  error && console.error(error);
+  const [data, setdata] = useState(null);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    fetchCategory(name,setLoading).then((data2) => setdata(data2));
+  }, [name]);
+
   return (
     <>
       <CartLink />
@@ -27,7 +28,7 @@ const Category = (props) => {
               {loading ? (
                 <AllCategorieLoader />
               ) : (
-                data.allSofas.map((item, index) => {
+                data?.categorie?.sofa.map((item, index) => {
                   return (
                     <ListItem
                       key={index}

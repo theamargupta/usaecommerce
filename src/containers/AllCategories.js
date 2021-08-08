@@ -1,50 +1,59 @@
-import { titleIfy } from '../utils/helpers';
-import { DisplayMedium } from '../components';
-import CartLink from '../components/CartLink';
-import { useQuery } from '@apollo/react-hooks';
-import { ALL_CATEGORIES, GET_ONE_CATEGORY } from '../graphql';
-import CardLoader from '../components/Loaders/CardLoader';
-import AllCategorieLoader from '../components/Loaders/AllCategorieLoader';
+import { titleIfy } from "../utils/helpers";
+import React, { useState, useEffect } from "react";
+import { DisplayMedium } from "../components";
+import CartLink from "../components/CartLink";
+import { fetchAllCategory, fetchOneCategory } from "../graphql";
+import CardLoader from "../components/Loaders/CardLoader";
+import AllCategorieLoader from "../components/Loaders/AllCategorieLoader";
 // import { toast } from 'react-toastify';
 
 const Category = ({ categoryData }) => {
-  const { loading, error, data } = useQuery(GET_ONE_CATEGORY, {
-    variables: { value: categoryData.value },
+  const [data1, setdata] = useState({
+    allSofas: { sofa: [{ image: "" }] },
+    countData: { sofa: [] },
   });
-  data && console.log(data);
-  error && console.log(error);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    fetchOneCategory(categoryData.value, setLoading).then((data2) =>
+      setdata(data2)
+    );
+  }, [categoryData.value]);
 
   return loading ? (
     <CardLoader />
   ) : (
     <DisplayMedium
-      imageSrc={data.allSofas[0].image}
-      subtitle={`${data.countData.count} items`}
+      imageSrc={data1?.allSofas?.sofa[0]?.image}
+      subtitle={`${data1.countData?.sofa?.length} items`}
       title={titleIfy(categoryData.name)}
       link={`/category/${categoryData.value}`}
     />
   );
 };
 const AllCategories = () => {
-  const { loading, data } = useQuery(ALL_CATEGORIES);
+  const [data, setdata] = useState({ allCategories: [] });
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    fetchAllCategory(setLoading).then((data2) => setdata(data2));
+  }, []);
   return loading ? (
     <AllCategorieLoader />
   ) : (
     <>
-      <div className='w-full'>
+      <div className="w-full">
         <CartLink />
         <div
-          className='
+          className="
           pt-4 sm:pt-10 pb-8
-        '
+        "
         >
-          <h1 className='text-5xl font-light'>All categories</h1>
+          <h1 className="text-5xl font-light">All categories</h1>
         </div>
-        <div className='flex flex-col items-center'>
+        <div className="flex flex-col items-center">
           {/* <div className="my-4 lg:my-8 flex flex-col lg:flex-row justify-between"> */}
           <div
-            className='grid gap-4
-          lg:grid-cols-3 md:grid-cols-2 grid-cols-1'
+            className="grid gap-4
+          lg:grid-cols-3 md:grid-cols-2 grid-cols-1"
           >
             {data.allCategories.map((categoryData, index) => (
               <Category key={index} categoryData={categoryData} />
