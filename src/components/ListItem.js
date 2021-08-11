@@ -1,7 +1,7 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import DENOMINATION from '../utils/currencyProvider';
 import Image from './Image';
+;
 
 const ListItem = ({ link, title, imageSrc, price }) => (
   <div

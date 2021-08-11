@@ -1,16 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import {  fetchAllCategory } from "../graphql";
+import { fetchAllCategory } from "../graphql";
 import HeaderLoader from "../components/Loaders/HeaderLoader";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Layout({ children, categories }) {
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  const history = useHistory();
   const [data, setdata] = useState({ allCategories: [] });
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     fetchAllCategory(setLoading).then((data2) => setdata(data2));
   }, []);
+  const handleAdmin = () => {
+    return isAuthenticated ? history.push("/admin") : loginWithRedirect();
+  };
   return (
     <div>
       <nav>
@@ -99,9 +105,11 @@ export default function Layout({ children, categories }) {
             flex flex-1 mt-4
           "
           >
-            <Link to="/admin" aria-label="Admin panel">
-              <p className="text-sm font-semibold">Admins</p>
-            </Link>
+            {/* <Link to="/admin" aria-label="Admin panel"> */}
+            <p onClick={handleAdmin} className="text-sm font-semibold">
+              Admins
+            </p>
+            {/* </Link> */}
           </div>
         </div>
       </footer>

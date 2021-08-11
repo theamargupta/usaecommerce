@@ -30,6 +30,7 @@ function getTrimmedString(string, length = 8) {
   }
 }
 
+
 export {
   slugify, titleIfy, getTrimmedString
 }
